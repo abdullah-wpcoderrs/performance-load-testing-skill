@@ -1,0 +1,40 @@
+{
+  "name": "performance-load-testing-skill",
+  "version": "1.0.0",
+  "description": "Install the reusable Grafana k6 load-testing Agent Skill.",
+  "bin": {
+    "load-testing-skill": "bin/install.js"
+  },
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "agents",
+    "references",
+    "scripts/next_report_path.py",
+    "scripts/prepend_report.py",
+    "scripts/register-symlinks.ps1",
+    "scripts/register-symlinks.sh",
+    "bin"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "install-skill": "node bin/install.js",
+    "test:installer": "node bin/install.js --dry-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdullah-wpcoderrs/performance-load-testing-skill.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abdullah-wpcoderrs/performance-load-testing-skill/issues"
+  },
+  "homepage": "https://github.com/abdullah-wpcoderrs/performance-load-testing-skill#readme",
+  "keywords": [
+    "agent-skills",
+    "k6",
+    "load-testing",
+    "performance-testing"
+  ]
+}

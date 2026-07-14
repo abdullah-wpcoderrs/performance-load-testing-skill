@@ -53,6 +53,34 @@ The [Grafana k6 installation guide](https://grafana.com/docs/k6/latest/set-up/in
 
 Keep this directory as the source of truth. Symlinks let compatible agents use the same copy, so changes are immediately shared.
 
+### Node.js installer (recommended)
+
+With Node.js 18 or newer, install directly from GitHub:
+
+```bash
+npx github:abdullah-wpcoderrs/performance-load-testing-skill
+```
+
+The command copies the skill into `~/.agent-skills/load-testing`, then creates the documented agent symlinks. The durable copy matters: it prevents links from pointing into the temporary `npx` cache. It never replaces an unrelated directory or link.
+
+Preview an installation without making changes:
+
+```bash
+npx github:abdullah-wpcoderrs/performance-load-testing-skill -- --dry-run
+```
+
+To update a copy previously installed by this command, run:
+
+```bash
+npx github:abdullah-wpcoderrs/performance-load-testing-skill -- --force
+```
+
+After publishing this package to npm, users can use the shorter equivalent command:
+
+```bash
+npx performance-load-testing-skill
+```
+
 ### macOS and Linux
 
 From the `load-testing` directory, run:

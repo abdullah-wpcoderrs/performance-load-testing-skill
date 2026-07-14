@@ -11,6 +11,7 @@ $targets = @(
     (Join-Path $HOME ".config/opencode/skills/load-testing"),
     (Join-Path $HOME ".copilot/skills/load-testing"),
     (Join-Path $HOME ".gemini/skills/load-testing"),
+    (Join-Path $HOME ".gemini/config/skills/load-testing"),
     (Join-Path $HOME ".qwen/skills/load-testing"),
     (Join-Path $HOME ".kiro/skills/load-testing"),
     (Join-Path $HOME ".cline/skills/load-testing"),

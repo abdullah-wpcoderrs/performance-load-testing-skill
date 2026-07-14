@@ -61,7 +61,9 @@ With Node.js 18 or newer, install directly from GitHub:
 npx github:abdullah-wpcoderrs/performance-load-testing-skill
 ```
 
-The command copies the skill into `~/.agent-skills/load-testing`, then creates the documented agent symlinks. The durable copy matters: it prevents links from pointing into the temporary `npx` cache. It never replaces an unrelated directory or link.
+The installer presents an interactive flow like `npx skills`: choose **Global** or **Project** scope, choose the target agents, choose **Symlink** (recommended) or **Copy**, review the plan, and confirm. The symlink method copies the skill once to a canonical location, then links each selected agent to it. This prevents links from pointing into the temporary `npx` cache and keeps updates consistent.
+
+For Codex and Antigravity, choose **Global**, select **Codex** and **Antigravity**, then select **Symlink**. Antigravity uses `~/.gemini/config/skills` globally and `.agents/skills` in a project.
 
 Preview an installation without making changes:
 
@@ -74,6 +76,30 @@ To update a copy previously installed by this command, run:
 ```bash
 npx github:abdullah-wpcoderrs/performance-load-testing-skill -- --force
 ```
+
+For automation, skip the prompts with an explicit plan:
+
+```bash
+npx github:abdullah-wpcoderrs/performance-load-testing-skill -- --global --agents codex,antigravity --method symlink --yes
+```
+
+If migrating a prior link created by an older version of this installer, append `--force`; interactive installs instead ask before replacing a conflicting symlink.
+
+### Uninstall
+
+Run the installer again with `--uninstall`, select the original scope and agents, then confirm the removal:
+
+```bash
+npx github:abdullah-wpcoderrs/performance-load-testing-skill -- --uninstall
+```
+
+Remove the global Codex and Antigravity installation without prompts:
+
+```bash
+npx github:abdullah-wpcoderrs/performance-load-testing-skill -- --uninstall --global --agents codex,antigravity --yes
+```
+
+Only links or copied folders created by this installer are removed. Unrelated skills and directories are left untouched. If no selected-agent links still use it, the installer also removes its canonical `~/.agent-skills/load-testing` copy.
 
 After publishing this package to npm, users can use the shorter equivalent command:
 
@@ -98,6 +124,7 @@ This registers the documented user-level locations below. Every link points to t
 | `~/.config/opencode/skills/load-testing` | OpenCode |
 | `~/.copilot/skills/load-testing` | GitHub Copilot CLI and compatible Copilot surfaces; Warp also scans it |
 | `~/.gemini/skills/load-testing` | Gemini CLI; Warp also scans it |
+| `~/.gemini/config/skills/load-testing` | Antigravity global scope |
 | `~/.qwen/skills/load-testing` | Qwen Code |
 | `~/.kiro/skills/load-testing` | Kiro |
 | `~/.cline/skills/load-testing` | Cline |

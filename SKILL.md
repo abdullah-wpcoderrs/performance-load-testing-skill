@@ -1,6 +1,6 @@
 ---
 name: load-testing
-description: Create, run, and report safe Grafana k6 performance tests for web applications and APIs. Use when the user invokes load-testing or asks for a smoke, average-load/load, stress, soak/endurance, spike, or breakpoint/capacity test; needs a k6 script, workload model, thresholds, live web dashboard, numbered HTML result, or docs/load-test.md report; or wants to interpret and compare k6 results.
+description: Create, run, and explain safe Grafana k6 performance tests for web applications and APIs. Use when the user invokes load-testing or asks for a smoke, average-load/load, stress, soak/endurance, spike, or breakpoint/capacity test; needs a k6 script, workload model, thresholds, live web dashboard, numbered HTML result, a load-test/Report.md report, plain-English interpretation, recommended performance improvements, or comparison of test results.
 ---
 
 # k6 Load Testing
@@ -22,7 +22,7 @@ If the type is absent or ambiguous, ask only which of the six types to use befor
 
 ## Inspect before asking
 
-Inspect the repository for its stack, existing tests, documented user journeys, environment examples, authentication helpers, k6 conventions, and `docs/` contents. Use `rg` and `rg --files`. Check `k6 version`. Do not open secret files or print credential values.
+Inspect the repository for its stack, existing tests, documented user journeys, environment examples, authentication helpers, k6 conventions, and existing `load-test/` artifacts. Use `rg` and `rg --files`. Check `k6 version`. Do not open secret files or print credential values.
 
 Read [references/test-types.md](references/test-types.md) for the selected workload. Read [references/k6-authoring.md](references/k6-authoring.md) before writing a script. For breakpoint tests, also read [references/breakpoint-testing.md](references/breakpoint-testing.md). Read [references/reporting.md](references/reporting.md) before running or reporting.
 
@@ -69,9 +69,9 @@ python3 <skill-dir>/scripts/next_report_path.py --project-root .
 
 Use the returned relative path exactly. The sequence must be:
 
-- `docs/load-test.html`
-- `docs/load-test-2.html`
-- `docs/load-test-3.html`
+- `load-test/load-test.html`
+- `load-test/load-test-2.html`
+- `load-test/load-test-3.html`
 - and so on
 
 Never overwrite an existing HTML report.
@@ -81,7 +81,7 @@ Never overwrite an existing HTML report.
 Build the full command with the live dashboard and allocated HTML export:
 
 ```bash
-K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=docs/load-test.html k6 run tests/load/stress-test.js
+K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=load-test/load-test.html k6 run tests/load/stress-test.js
 ```
 
 Replace both paths with the actual allocated report path and script path. Add safe `-e` values only when needed; pass secrets through the environment without echoing them.
@@ -92,16 +92,18 @@ Monitor the run. Stop when an agreed safety condition is reached, the target bec
 
 ## Write the report
 
-Create a temporary Markdown section following [references/reporting.md](references/reporting.md), then prepend it beneath the document title with:
+Always create or update `load-test/Report.md`, including when the run fails, is aborted, is generator-limited, or cannot run. Create a temporary Markdown section following [references/reporting.md](references/reporting.md), then prepend it beneath the document title with:
 
 ```bash
 python3 <skill-dir>/scripts/prepend_report.py \
-  --report docs/load-test.md \
+  --report load-test/Report.md \
   --section <temporary-section.md>
 ```
 
 Use an ISO 8601 timestamp with timezone in every section heading. Preserve every previous section. Report observed values only; label estimates and incomplete runs clearly. Include the exact sanitized command and links/paths to the script and numbered HTML report.
 
+Write for a non-specialist first. Explain what happened, what each reported figure means in this run, why thresholds passed or failed, whether errors indicate slowness or broken behavior, and what the user should improve next. Explain warnings such as interrupted or dropped iterations instead of listing them without context. Do not invent a root cause when telemetry is missing.
+
 ## Finish
 
-Summarize the test type, outcome, most important bottleneck or result, created artifacts, and the next recommended test. Distinguish among `passed`, `failed`, `aborted for safety`, `generator-limited`, and `not run`.
+Lead with the test type and outcome, then use compact sections for results, plain-English interpretation of errors and figures, recommended project improvements, and documents. Link `load-test/Report.md` and every generated HTML report. Distinguish among `passed`, `failed`, `aborted for safety`, `generator-limited`, and `not run`; do not make the user open an artifact to understand the result.

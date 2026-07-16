@@ -1,4 +1,4 @@
 interface:
-  display_name: "load-testing"
-  short_description: "Create and run safe k6 load tests"
-  default_prompt: "Use $load-testing to create and run a stress test for this project."
+  display_name: "Load Testing"
+  short_description: "Run safe k6 tests with clear reports"
+  default_prompt: "Use $load-testing to run a safe k6 test and explain the results in plain English."

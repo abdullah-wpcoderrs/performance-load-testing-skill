@@ -11,7 +11,7 @@ The skill supports the full k6 load-testing cycle:
 - Spike
 - Breakpoint (capacity discovery)
 
-It inspects the project first, asks a compact intake, creates a focused k6 script, runs an authorized test with a live dashboard, exports a numbered HTML result, and prepends the result to `docs/load-test.md`.
+It inspects the project first, asks a compact intake, creates a focused k6 script, runs an authorized test with a live dashboard, exports a numbered HTML result, and prepends a plain-English result to `load-test/Report.md`.
 
 ## Requirements
 
@@ -272,22 +272,22 @@ It reports the last healthy and first unhealthy load stages, whether the target 
 
 ## Generated artifacts
 
-For every run, the skill allocates a new HTML dashboard export and preserves a cumulative report:
+For every run, the skill allocates a new HTML dashboard export and preserves a cumulative, human-readable report:
 
 ```text
-docs/load-test.html
-docs/load-test-2.html
-docs/load-test-3.html
-docs/load-test.md
+load-test/load-test.html
+load-test/load-test-2.html
+load-test/load-test-3.html
+load-test/Report.md
 ```
 
 The execution command always enables the real-time dashboard and exports the allocated HTML file:
 
 ```bash
-K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=docs/load-test.html k6 run tests/load/stress-test.js
+K6_WEB_DASHBOARD=true K6_WEB_DASHBOARD_EXPORT=load-test/load-test.html k6 run tests/load/stress-test.js
 ```
 
-The skill substitutes the real script and the next available report filename. Every `docs/load-test.md` entry is timestamped, prepended without deleting previous evidence, and includes the sanitized command, workload, thresholds, outcome, metrics, findings, and recommendations.
+The skill substitutes the real script and the next available report filename. Every `load-test/Report.md` entry is timestamped and prepended without deleting previous evidence. It leads with the outcome, explains the results and each relevant figure in layman terms, distinguishes slowness from broken behavior, explains warnings and failures, recommends prioritized project improvements, and preserves the technical workload, thresholds, sanitized command, limitations, and artifact paths.
 
 ## References
 

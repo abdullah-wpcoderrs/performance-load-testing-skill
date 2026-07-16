@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepend a run section below the H1 in docs/load-test.md."""
+"""Prepend a run section below the H1 in load-test/Report.md."""
 
 from __future__ import annotations
 
@@ -8,7 +8,8 @@ import os
 import tempfile
 from pathlib import Path
 
-TITLE = "# k6 Load Test Report"
+TITLE = "# Load Test Report"
+LEGACY_TITLES = {TITLE, "# k6 Load Test Report"}
 
 
 def normalize_section(text: str) -> str:
@@ -26,7 +27,7 @@ def merge(existing: str, section: str) -> str:
         return f"{TITLE}\n\n{section}\n"
 
     lines = old.splitlines()
-    if lines[0].strip() == TITLE:
+    if lines[0].strip() in LEGACY_TITLES:
         remainder = "\n".join(lines[1:]).strip()
         suffix = f"\n\n{remainder}" if remainder else ""
         return f"{TITLE}\n\n{section}{suffix}\n"
